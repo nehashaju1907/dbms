@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 
@@ -7,7 +6,7 @@ import './App.css';
 function HomePage() {
   return (
     <div className="home-page">
-      <h1>Welcome to Our Website</h1>
+      <h1>Welcome to Sahyadri</h1>
       <p>This is the homepage. Navigate to other pages using the links above.</p>
     </div>
   );
@@ -20,7 +19,7 @@ function BookingPage() {
     email: '',
     roomType: 'Single',
     checkInDate: '',
-    checkOutDate: ''
+    checkOutDate: '',
   });
 
   const handleChange = (e) => {
@@ -30,7 +29,12 @@ function BookingPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Booking successful!\nName: ${formData.name}\nEmail: ${formData.email}\nRoom Type: ${formData.roomType}\nCheck-In: ${formData.checkInDate}\nCheck-Out: ${formData.checkOutDate}");
+    alert(`Booking successful!
+Name: ${formData.name}
+Email: ${formData.email}
+Room Type: ${formData.roomType}
+Check-In: ${formData.checkInDate}
+Check-Out: ${formData.checkOutDate}`);
   };
 
   return (
@@ -38,28 +42,28 @@ function BookingPage() {
       <h1>Booking Page</h1>
       <form onSubmit={handleSubmit} className="booking-form">
         <div className="form-group">
-          <label htmlFor="name">Name: </label>
+          <label htmlFor="name">Room Name:</label>
           <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required />
         </div>
         <div className="form-group">
-          <label htmlFor="email">Email: </label>
+          <label htmlFor="email">USN:</label>
           <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required />
         </div>
         <div className="form-group">
-          <label htmlFor="roomType">Room Type: </label>
+          <label htmlFor="roomType">Capacity:</label>
           <select id="roomType" name="roomType" value={formData.roomType} onChange={handleChange}>
-            <option value="Single">Single</option>
-            <option value="Double">Double</option>
-            <option value="Suite">Suite</option>
+            <option value="Single">50-100</option>
+            <option value="Double">100-200</option>
+            <option value="Suite">More than 200</option>
           </select>
         </div>
         <div className="form-group">
-          <label htmlFor="checkInDate">Check-In Date: </label>
+          <label htmlFor="checkInDate">Booking Date:</label>
           <input type="date" id="checkInDate" name="checkInDate" value={formData.checkInDate} onChange={handleChange} required />
         </div>
         <div className="form-group">
-          <label htmlFor="checkOutDate">Check-Out Date: </label>
-          <input type="date" id="checkOutDate" name="checkOutDate" value={formData.checkOutDate} onChange={handleChange} required />
+          <label htmlFor="checkOutDate">Booking Time:</label>
+          <input type="time" id="bookingtime" name="bookingtime" value={formData.checkOutDate} onChange={handleChange} required />
         </div>
         <button type="submit" className="submit-button">Book Now</button>
       </form>
@@ -69,26 +73,40 @@ function BookingPage() {
 
 // FormSubmissionPage Component
 function FormSubmissionPage() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: '',
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    alert('Form submitted!');
+    alert(`Form submitted!
+Name: ${formData.name}
+Email: ${formData.email}
+Message: ${formData.message}`);
   };
 
   return (
     <div className="form-page">
-      <h1>Form Submission Page</h1>
+      <h1>Complaint Form</h1>
       <form onSubmit={handleSubmit} className="form-submission">
         <div className="form-group">
-          <label htmlFor="name">Name: </label>
-          <input type="text" id="name" name="name" required />
+          <label htmlFor="name">Name:</label>
+          <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required />
         </div>
         <div className="form-group">
-          <label htmlFor="email">Email: </label>
-          <input type="email" id="email" name="email" required />
+          <label htmlFor="email">Email:</label>
+          <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required />
         </div>
         <div className="form-group">
-          <label htmlFor="message">Message: </label>
-          <textarea id="message" name="message" required></textarea>
+          <label htmlFor="message">Complaint:</label>
+          <textarea id="message" name="message" value={formData.message} onChange={handleChange} required></textarea>
         </div>
         <button type="submit" className="submit-button">Submit</button>
       </form>
@@ -103,7 +121,7 @@ function Navigation() {
       <ul>
         <li><Link to="/">Home</Link></li>
         <li><Link to="/booking">Booking</Link></li>
-        <li><Link to="/form">Form Submission</Link></li>
+        <li><Link to="/form">Complaint Form</Link></li>
       </ul>
     </nav>
   );
@@ -126,8 +144,3 @@ function App() {
 }
 
 export default App;
-
-
-// Render the application
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
